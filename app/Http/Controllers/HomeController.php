@@ -201,7 +201,7 @@ class HomeController extends Controller
                            ->join('foods', 'food_order.food_id', '=', 'foods.id')
                            ->join('users', 'users.id', '=', 'food_order.user_id')
                            ->where('restaurant_id', $user_id)
-                           ->select('users.name as customername','users.mobile as customerphone','foods.id as foodid','foods.name as foodname','foods.description as fooddesc','foods.price as foodprice','food_order.created_at as time')
+                           ->select('users.name as customername','users.address as address','users.mobile as customerphone','foods.id as foodid','foods.name as foodname','foods.description as fooddesc','foods.price as foodprice','food_order.created_at as time')
                            ->get();
          
                return view('restaurant.orders',compact('customers'));

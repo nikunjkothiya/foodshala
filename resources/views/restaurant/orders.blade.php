@@ -20,6 +20,7 @@
                         <th width="10">No</th>
                         <th>Customer Name</th>
                         <th>Customer Mobile</th>
+                        <th>Customer Address</th>
                         <th>Food Name</th>
                         <th>Food Description</th>
                         <th>Food Price</th>
@@ -38,6 +39,10 @@
                         </td>
                         <td>
                             {{ $value->customerphone ?? '' }}
+                        </td>
+                        <td>
+                        {{substr($value->address, 0, 20) ?? ""}}</br>
+                        {{substr($value->address, 21, 20) ?? ""}}
                         </td>
                         <td>
                             {{ $value->foodname ?? '' }}
