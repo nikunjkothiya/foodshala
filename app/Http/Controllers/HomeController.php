@@ -88,7 +88,7 @@ class HomeController extends Controller
 
                return redirect()->back()->with('message','Order Book Successfully');
            }else{
-               return redirect()->back()->with('error','Restaurant can not add order self');
+               return redirect()->back()->with('error','Dear Restaurant, Please logout from customer and login');
            }
       }else{
        return Redirect::to('login');
