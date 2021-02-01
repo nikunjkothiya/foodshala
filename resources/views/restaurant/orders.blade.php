@@ -22,7 +22,6 @@
                         <th>Customer Mobile</th>
                         <th>Customer Address</th>
                         <th>Food Name</th>
-                        <th>Food Description</th>
                         <th>Food Price</th>
                         <th>Order Time</th>
                     </tr>
@@ -47,10 +46,7 @@
                         <td>
                             {{ $value->foodname ?? '' }}
                         </td>
-                        <td>
-                        {{substr($value->fooddesc, 0, 20) ?? ""}}</br>
-                        {{substr($value->fooddesc, 21, 20) ?? ""}}
-                        </td>
+                       
                         <td>
                             {{ $value->foodprice ?? '' }}
                         </td>
