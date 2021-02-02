@@ -47,7 +47,9 @@
                         </td>
                         @else
                         <td>
-                            Image Not Available
+                            <a href="#">
+                                <img src="{{asset('images/no-image.jpg')}}" alt="" height=80 width=80>
+                            </a>
                         </td>
                         @endif
 
