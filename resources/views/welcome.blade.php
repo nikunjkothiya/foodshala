@@ -168,7 +168,11 @@
                                     @csrf
                                     <div >
                                         <div class="gallery-single fix">
+                                        @if(isset($value->image))
                                             <img src="{{asset(''.$value->image)}}" class="img-fluid" alt="Image" style="height:200px; width:260px;">
+                                         @else
+                                            <img src="{{asset('images/no-image.jpg')}}" class="img-fluid" alt="Image" style="height:200px; width:260px;">
+                                         @endif
                                             <div class="why-text">
                                                 <h4>{{$value->name ?? ''}}</h4>
                                                 <p>{{$value->description ?? ''}}</p>
