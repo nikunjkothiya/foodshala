@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 //Route::post('sendOtp', 'UserController@sendOtp');
 Route::post('login', 'HomeController@login');
+Route::post('register', 'HomeController@register');
 
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -23,5 +24,5 @@ Route::post('login', 'HomeController@login');
 
 Route::group(['middleware' => ['auth:api']], function() {
 
-    
+
 });

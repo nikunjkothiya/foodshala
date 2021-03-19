@@ -213,30 +213,57 @@ class HomeController extends Controller
       }
     }
 
+    ///API
+
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required',
+            'mobile' => 'required',
             'password' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json(['success' => false, 'message' => 'Parameter Misssing']);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('mobile', $request->mobile)->first();
        
         if (is_null($user)) {
-            return response()->json(['success' => false, 'message' => 'Login Fail, please check email id']);
+            return response()->json(['success' => false, 'message' => 'Login Fail, Please Check Mobile Number']);
         }else{
-            if (Auth::attempt(['email'=> $request->email, 'password'=> $request->password])) {
+            if (Auth::attempt(['mobile'=> $request->mobile, 'password'=> $request->password])) {
                 return response()->json(['success' => true, 'message' => 'success', 'data' => $user]);
             }else{    
                 return response()->json(['success' => false, 'message' => 'Login Fail, pls check password']);
             }  
         }
+    }
+
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+            'mobile' => 'required|integer|unique:users,mobile',
+            'address'   => 'required|min:5|max:250',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Parameter Misssing']);
+        }
+
+        $user = new User();
+        $user->role_id = 1;
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->food_type = 1;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'User Successfully Register', 'data' => $user]);
     }
 
 }
