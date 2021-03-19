@@ -213,4 +213,30 @@ class HomeController extends Controller
       }
     }
 
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = User::where('email', $request->email)->first();
+       
+        if (is_null($user)) {
+            return response()->json(['success' => false, 'message' => 'Login Fail, please check email id']);
+        }else{
+            if (Auth::attempt(['email'=> $request->email, 'password'=> $request->password])) {
+                return response()->json(['success' => true, 'message' => 'success', 'data' => $user]);
+            }else{    
+                return response()->json(['success' => false, 'message' => 'Login Fail, pls check password']);
+            }  
+        }
+    }
+
 }

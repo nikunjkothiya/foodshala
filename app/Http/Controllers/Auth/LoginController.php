@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -27,15 +30,16 @@ class LoginController extends Controller
      *
      * @var string
      */
-   // protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
-   protected function authenticated(Request $request, $user) {
-    if ($user->role_id == 1) {
-        return redirect('/');
-    }else {
-        return redirect('/restaurant');
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->role_id == 1) {
+            return redirect('/');
+        } else {
+            return redirect('/restaurant');
+        }
     }
-}
     /**
      * Create a new controller instance.
      *
@@ -45,4 +49,5 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
 }
