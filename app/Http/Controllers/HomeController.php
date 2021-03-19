@@ -244,7 +244,7 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
+            'password' => 'required',
             'mobile' => 'required|integer|unique:users,mobile',
             'address'   => 'required|min:5|max:250',
         ]);
