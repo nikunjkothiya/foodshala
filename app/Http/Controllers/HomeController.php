@@ -223,7 +223,7 @@ class HomeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Parameter Misssing']);
+            return response()->json($validator->messages(), 200);
         }
 
         $user = User::where('mobile', $request->mobile)->first();
@@ -244,13 +244,13 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'mobile' => 'required|integer|unique:users,mobile',
             'address'   => 'required|min:5|max:250',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Parameter Misssing']);
+            return response()->json($validator->messages(), 200);
         }
 
         $user = new User();
@@ -264,6 +264,26 @@ class HomeController extends Controller
         $user->save();
 
         return response()->json(['success' => true, 'message' => 'User Successfully Register', 'data' => $user]);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'mobile' => 'required|integer',
+            'password' => 'required|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);
+        }
+
+        $user = User::where('email',$request->email)->where('mobile',$request->mobile)->update(['password' => Hash::make($request->password)]);
+        if($user){
+            return response()->json(['success' => true, 'message' => 'User Password Changed Successfully', 'data' => $user]);
+        }else{
+            return response()->json(['success' => false, 'message' => 'Something Wrong, Pls Check Email or Number']);
+        }
     }
 
 }
