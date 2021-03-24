@@ -223,7 +223,7 @@ class HomeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->messages(), 200);
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation'] ,);
         }
 
         $user = User::where('mobile', $request->mobile)->first();
@@ -250,7 +250,7 @@ class HomeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->messages(), 200);
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
         }
 
         $user = new User();
@@ -275,7 +275,7 @@ class HomeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->messages(), 200);
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
         }
 
         $user = User::where('email',$request->email)->where('mobile',$request->mobile)->update(['password' => Hash::make($request->password)]);
