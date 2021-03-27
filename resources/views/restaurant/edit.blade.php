@@ -43,8 +43,8 @@
                     <div class="col-lg-3 form-group">   
                         <label for="foodtype">Select Food Type<sup class="text-danger">*</sup></label>
                         <select class="form-control" id="foodtype" name="food_type">
-                            <option value="1" @if($food->food_type == 1) selected @endif>Vegetarian</option>
-                            <option value="2" @if($food->food_type == 2) selected @endif>Non-Vegetarian</option>
+                            <option value="1" @if($food->food_type == 1) selected @endif>Pizza</option>
+                            <option value="2" @if($food->food_type == 2) selected @endif>Burger</option>
                         </select>
                     </div>
                 </div>

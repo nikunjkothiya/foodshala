@@ -40,8 +40,8 @@
                     <div class="col-lg-3 form-group">   
                         <label for="foodtype">Select Food Type<sup class="text-danger">*</sup></label>
                         <select class="form-control" id="foodtype" name="food_type">
-                            <option value="1" selected>Vegetarian</option>
-                            <option value="2">Non-Vegetarian</option>
+                            <option value="1" selected>Pizza</option>
+                            <option value="2">Burger</option>
                         </select>
                     </div>
                 </div>

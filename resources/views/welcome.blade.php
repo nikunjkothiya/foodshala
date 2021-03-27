@@ -145,7 +145,7 @@
                 <div class="col-lg-12">
                     <div class="heading-title text-center">
                         <h2>All Special Menu's</h2>
-                        <p>Menus from all the Best Restaurants</p>
+                        <p>Menus from all the Best Restaurant</p>
                     </div>
                 </div>
             </div>
@@ -153,8 +153,8 @@
             <div class="row inner-menu-box">
                 <div class="col-3">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Vegeterian</a>
-                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Non-Vegeterian</a>
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Pizza</a>
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Burger</a>
                     </div>
                 </div>
 
@@ -234,7 +234,7 @@
             <div class="container">
                     <div class="col-lg-12">
                         <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By Food Shala</a> Design By :
-                            <a href="#">Nikunj Kothiya</a>
+                            <a href="#">Philomina Khristri | Rucha Patel</a>
                         </p>
                     </div>
             </div>

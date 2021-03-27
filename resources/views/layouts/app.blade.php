@@ -50,9 +50,9 @@
                             @endif
                             
                             @if(Route::is('customer_registration') || Route::is('login'))
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">Register Restaurant</a>
-                            </li>
+                            </li> -->
                             @endif
                             @if(Route::is('register') || Route::is('login'))
                             <li class="nav-item">
