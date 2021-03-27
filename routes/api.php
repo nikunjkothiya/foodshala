@@ -18,6 +18,8 @@ Route::post('login', 'HomeController@login');
 Route::post('register', 'HomeController@register');
 Route::post('forgotPassword', 'HomeController@forgotPassword');
 Route::get('getList', 'HomeController@getList');
+Route::get('placeOrder', 'HomeController@placeOrder');
+Route::get('userOrder', 'HomeController@userOrder');
 
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

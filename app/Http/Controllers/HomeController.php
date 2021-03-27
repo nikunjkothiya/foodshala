@@ -305,4 +305,38 @@ class HomeController extends Controller
         return response()->json(['success' => true, 'message' => 'Get Food List Successfully', 'data' => $query]);
     }
 
+    public function placeOrder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'food_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
+        }
+
+        $newfood =new FoodOrder;
+        $newfood->user_id = $request->user_id;
+        $newfood->food_id = $request->food_id;
+        $newfood->restaurant_id = 1; // bhavesh only restaurant
+        $newfood->save();
+
+        return response()->json(['success' => true, 'message' => 'Food Ordered Successfully', 'data' => $newfood]);
+    }
+    
+    public function userOrder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
+        }
+
+        $foods =FoodOrder::with('food_user','food')->where('user_id', $request->user_id)->orderBy('created_at','desc')->get();
+
+        return response()->json(['success' => true, 'message' => 'User Orders Get Successfully', 'data' => $foods]);
+    }   
 }
