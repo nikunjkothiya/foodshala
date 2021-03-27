@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'HomeController@login');
 Route::post('register', 'HomeController@register');
 Route::post('forgotPassword', 'HomeController@forgotPassword');
+Route::get('getList', 'HomeController@getList');
 
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -24,6 +25,5 @@ Route::post('forgotPassword', 'HomeController@forgotPassword');
  */
 
 Route::group(['middleware' => ['auth:api']], function() {
-
-
+    
 });

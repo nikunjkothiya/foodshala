@@ -286,4 +286,23 @@ class HomeController extends Controller
         }
     }
 
+    public function getList(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'type' => 'sometimes|numeric|min:1|max:2',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
+        }
+
+        $query = Food::where('price','>',0);
+        if(!is_null($request->type)){
+            $query = $query->where('food_type',$request->type)->get();
+        }else{
+            $query = $query->get();
+        }
+        return response()->json(['success' => true, 'message' => 'Get Food List Successfully', 'data' => $query]);
+    }
+
 }
