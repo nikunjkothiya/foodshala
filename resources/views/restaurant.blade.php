@@ -13,7 +13,7 @@
     <title>Welcome Restaurant</title>
 
     <!-- Site Icons -->
-    <link rel="icon" href="{{asset('images/my-logo.jpg')}}">
+    <link rel="icon" href="{{asset('images/pizzabug.png')}}">
     <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}">
 
     <!-- Bootstrap CSS -->
@@ -38,7 +38,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="{{route('restaurant')}}">
-                    <img src="{{asset('images/restaurant-logo.png')}}" alt="" width="100px" height="100px" />
+                    <img src="{{asset('images/pizzabug.png')}}" alt="" width="100px" height="100px" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Feedback;
 use App\Food;
 use App\User;
 use App\FoodOrder;
@@ -286,6 +287,30 @@ class HomeController extends Controller
         }
     }
 
+    public function editProfile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'name' => 'sometimes',
+            'address'   => 'sometimes|min:5|max:250',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
+        }
+
+        $user = User::find($request->user_id);
+        if(isset($request->name)){
+            $user->name = $request->name;
+        }
+        if(isset($request->address)){
+            $user->address = $request->address;
+        }
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'User Profile Update Successfully', 'data' => $user]);
+    }
+
     public function getList(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -338,5 +363,26 @@ class HomeController extends Controller
         $foods =FoodOrder::with('food_user','food')->where('user_id', $request->user_id)->orderBy('created_at','desc')->get();
 
         return response()->json(['success' => true, 'message' => 'User Orders Get Successfully', 'data' => $foods]);
-    }   
+    }
+
+    public function submitReview(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'rating'  => 'required|integer|min:1|max:5',
+            'message' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError($validator->errors()->first(), $this->statusArr['validation']);
+        }
+
+        $user = new Feedback;
+        $user->user_id = $request->user_id;
+        $user->rating = $request->rating;
+        $user->message = $request->message;
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'User Feedback Save Successfully', 'data' => $user]);
+    }
 }

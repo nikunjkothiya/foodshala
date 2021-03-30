@@ -13,11 +13,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Site Metas -->
-    <title>Food Shala</title>
+    <title>Pizza Bug</title>
 
     <!-- Site Icons -->
   <!--  <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" type="image/x-icon">  -->
-    <link rel="icon" href="{{asset('images/my-logo.jpg')}}">
+    <link rel="icon" href="{{asset('images/pizzabug.png')}}">
     <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}">
 
     <!-- Bootstrap CSS -->
@@ -42,7 +42,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <img src="{{asset('images/my-logo.jpg')}}" alt="" />
+                    <img src="{{asset('images/pizzabug.png')}}" alt="" />
                 </a>
 
                 @if (session()->has('message'))
@@ -75,7 +75,7 @@
                         @guest
                         <li class="nav-item active"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                         
-                        <li class="nav-item"><a class="nav-link" href="{{ route('customer_registration') }}">Register Customer</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="{{ route('customer_registration') }}">Register Customer</a></li> -->
                         @endguest
                         @auth
                         <li class="nav-item dropdown">
@@ -111,7 +111,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br>The Food Shala</strong></h1>
+                            <h1 class="m-b-20"><strong>Welcome To <br>The Pizza Bug</strong></h1>
                             <p class="m-b-40">“I know once people get connected to real food, they never change back.” </br>
                             “Food is symbolic of love when words are inadequate.”
                             </p> 
@@ -124,7 +124,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br>The Food Shala</strong></h1>
+                            <h1 class="m-b-20"><strong>Welcome To <br>The Pizza Bug</strong></h1>
                             <p class="m-b-40">“Food for us comes from our relatives, whether they have wings or fins or roots. That is how we consider food. Food has a culture. It has a history. It has a story. It has relationships.”</p>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
         <div class="copyright">
             <div class="container">
                     <div class="col-lg-12">
-                        <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By Food Shala</a> Design By :
+                        <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By Pizza Bug</a> Design By :
                             <a href="#">Philomina Khristri | Rucha Patel</a>
                         </p>
                     </div>

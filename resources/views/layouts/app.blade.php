@@ -31,7 +31,7 @@
             <header class="top-navbar">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <a class="navbar-brand" href="{{route('home')}}">
-                        <img src="images/my-logo.jpg" alt="" />
+                        <img src="images/pizzabug.png" alt="logo" />
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -55,9 +55,9 @@
                             </li> -->
                             @endif
                             @if(Route::is('register') || Route::is('login'))
-                            <li class="nav-item">
+                           <!--  <li class="nav-item">
                                 <a class="nav-link" href="{{ route('customer_registration') }}">Register Customer</a>
-                            </li>
+                            </li> -->
                             @endif
                             @else
                             <li class="nav-item dropdown">
