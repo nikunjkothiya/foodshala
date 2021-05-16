@@ -13,11 +13,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Site Metas -->
-    <title>Pizza Bug</title>
+    <title>Food Shala</title>
 
     <!-- Site Icons -->
   <!--  <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" type="image/x-icon">  -->
-    <link rel="icon" href="{{asset('images/pizzabug.png')}}">
+    <link rel="icon" href="{{asset('images/my-logo.jpg')}}">
     <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}">
 
     <!-- Bootstrap CSS -->
@@ -75,7 +75,7 @@
                         @guest
                         <li class="nav-item active"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                         
-                        <!-- <li class="nav-item"><a class="nav-link" href="{{ route('customer_registration') }}">Register Customer</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="{{ route('customer_registration') }}">Register Customer</a></li>
                         @endguest
                         @auth
                         <li class="nav-item dropdown">
@@ -111,7 +111,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br>The Pizza Bug</strong></h1>
+                            <h1 class="m-b-20"><strong>Welcome To <br>The FoodShala</strong></h1>
                             <p class="m-b-40">“I know once people get connected to real food, they never change back.” </br>
                             “Food is symbolic of love when words are inadequate.”
                             </p> 
@@ -124,7 +124,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br>The Pizza Bug</strong></h1>
+                            <h1 class="m-b-20"><strong>Welcome To <br>The FoodShala</strong></h1>
                             <p class="m-b-40">“Food for us comes from our relatives, whether they have wings or fins or roots. That is how we consider food. Food has a culture. It has a history. It has a story. It has relationships.”</p>
                         </div>
                     </div>
@@ -153,8 +153,8 @@
             <div class="row inner-menu-box">
                 <div class="col-3">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Pizza</a>
-                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Burger</a>
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Veg</a>
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Non-Veg</a>
                     </div>
                 </div>
 
@@ -233,8 +233,8 @@
         <div class="copyright">
             <div class="container">
                     <div class="col-lg-12">
-                        <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By Pizza Bug</a> Design By :
-                            <a href="#">Philomina Khristri | Rucha Patel</a>
+                        <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By FoodShala</a> Design By :
+                            <a href="#">Nikunj Kothiya</a>
                         </p>
                     </div>
             </div>

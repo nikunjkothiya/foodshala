@@ -72,8 +72,8 @@
                              <label for="foodtype" class="col-md-4 col-form-label text-md-right">Select Food Type</label>
                              <div class="col-md-6">
                              <select class="form-control" id="foodtype" name="foodtype">
-                                 <option value="1" selected>Pizza</option>
-                                 <option value="2">Burger</option>
+                                 <option value="1" selected>Vegetarian</option>
+                                 <option value="2">Non-Vegetarian</option>
                                  <option value="3">Both</option>
                              </select>
                              </div>

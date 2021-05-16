@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Route::post('sendOtp', 'UserController@sendOtp');
-Route::post('login', 'HomeController@login');
+/* Route::post('login', 'HomeController@login');
 Route::post('register', 'HomeController@register');
 Route::post('forgotPassword', 'HomeController@forgotPassword');
 Route::get('getList', 'HomeController@getList');
 Route::get('placeOrder', 'HomeController@placeOrder');
 Route::get('userOrder', 'HomeController@userOrder');
 Route::post('editProfile', 'HomeController@editProfile');
-Route::post('submitReview', 'HomeController@submitReview');
+Route::post('submitReview', 'HomeController@submitReview'); */
 
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
