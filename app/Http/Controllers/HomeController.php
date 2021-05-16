@@ -184,6 +184,12 @@ class HomeController extends Controller
          return view('restaurant.edit',compact('food'));    
     }
 
+    public function feedbacks()
+    {
+         $feedbacks = Feedback::with('user')->orderBy('id','desc')->get();
+         return view('restaurant.feedback',compact('feedbacks'));    
+    }
+
     public function food_delete($id)
     {
          $food = Food::find($id);
