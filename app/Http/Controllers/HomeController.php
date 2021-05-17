@@ -111,6 +111,7 @@ class HomeController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+       
        if(Auth::user()){
            $role_id = Auth::user()->role_id;
     
@@ -125,7 +126,8 @@ class HomeController extends Controller
                 }else{
                     $imgpath = null;
                 }
-                  $newfood_add =new Food;
+           
+                  $newfood_add = new Food();
                   $newfood_add->user_id = Auth::user()->id;
                   $newfood_add->name = $request->name;
                   $newfood_add->description = $request->description;
@@ -134,7 +136,7 @@ class HomeController extends Controller
                   $newfood_add->food_type = $request->food_type;
                   $newfood_add->save();
 
-               return redirect('/restaurant')->with('message','Food Added Successfully');
+               return redirect()->route('restaurant')->with('message','Food Added Successfully');
            }else{
                return redirect()->back()->with('error','Customer can not add food');
            }
@@ -176,7 +178,7 @@ class HomeController extends Controller
            $food->food_type = $request->food_type;
            $food->save();
 
-        return redirect('/restaurant')->with('message','Food Edit Successfully'); 
+        return redirect()->route('restaurant')->with('message','Food Edit Successfully'); 
     }
 
     public function food_find($id)
