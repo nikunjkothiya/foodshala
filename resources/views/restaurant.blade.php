@@ -69,7 +69,7 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item {{ request()->is('restaurant/add') ? 'active' : '' }}"><a class="nav-link" href="{{route('food.add')}}">Add Food</a></li>
                         <li class="nav-item {{ request()->is('restaurant/orders') ? 'active' : '' }}"><a class="nav-link" href="{{route('restaurant.orders')}}">Order List</a></li>
-                        <li class="nav-item {{ request()->is('restaurant/feedbacks') ? 'active' : '' }}"><a class="nav-link" href="{{route('restaurant.feedbacks')}}">Feed Back</a></li>
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
