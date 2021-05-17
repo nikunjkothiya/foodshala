@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-URL::forceScheme('http');
+//URL::forceScheme('http');
 Route::get('/', 'HomeController@allMenus')->name('home');
 Route::post('order_food', 'HomeController@order_food')->name('order_food');
 

@@ -13,7 +13,7 @@
     <title>Welcome Restaurant</title>
 
     <!-- Site Icons -->
-    <link rel="icon" href="{{asset('images/pizzabug.png')}}">
+    <link rel="icon" href="{{asset('images/my-logo.jpg')}}">
     <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}">
 
     <!-- Bootstrap CSS -->

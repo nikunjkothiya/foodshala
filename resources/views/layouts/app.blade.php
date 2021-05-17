@@ -31,7 +31,7 @@
             <header class="top-navbar">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <a class="navbar-brand" href="{{route('home')}}">
-                        <img src="images/pizzabug.png" alt="logo" />
+                        <img src="{{ asset('images/my-logo.jpg')}}" alt="logo" />
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>

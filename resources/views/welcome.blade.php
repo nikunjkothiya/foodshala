@@ -42,7 +42,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <img src="{{asset('images/pizzabug.png')}}" alt="" />
+                    <img src="{{asset('images/my-logo.jpg')}}" alt="logo" />
                 </a>
 
                 @if (session()->has('message'))
