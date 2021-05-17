@@ -90,7 +90,7 @@ class HomeController extends Controller
 
                return redirect()->back()->with('message','Order Book Successfully');
            }else{
-               return redirect()->back()->with('error','Dear Restaurant, Please logout from customer and login');
+               return redirect()->back()->with('error','Dear Restaurant, You Cannot Orders Food');
            }
       }else{
        return Redirect::to('login');
