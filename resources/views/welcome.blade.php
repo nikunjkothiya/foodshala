@@ -33,11 +33,29 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <style>
+        .ajax-loader11 {
+            visibility: hidden;
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: white;
+            background-image: url("{{ asset('images/Ripple-1s-200px.gif') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 10000000;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Start header -->
+    <div class="ajax-loader11">
+    </div>
     <header class="top-navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
@@ -81,7 +99,15 @@
                         @if(Auth::user()->role_id == 2)
                         <li class="nav-item"><a class="nav-link" href="{{ route('restaurant') }}">Your Panel</a></li>
                         @endif
+                        <button type="button" class="btn btn-outline-primary exampleModalajax" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fa fa-shopping-basket" aria-hidden="true">
+                                @if(Session::get('cart') != null)
+                                {!! count(Session::get('cart')) !!}
+                                @endif
+                            </i>
+                        </button>
                         <li class="nav-item dropdown">
+
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
@@ -194,10 +220,16 @@
                                         </div>
                                         <h5><strong> ₹ {{$value->price ?? ''}} / Item </strong></h5>
                                         <input type="hidden" value="{{$value->id}}" name="food_id">
-                                        <input type="hidden" value="{{$value->restaurant_details->id ?? ""}}" name="restaurant_id">
+                                        <input type="hidden" value="{{$value->restaurant_details->id ?? ''}}" name="restaurant_id">
                                         <h5> {{$value->restaurant_details->name ?? ''}}</h5>
                                         <h6> {{$value->restaurant_details->address ?? ""}}</h6>
-                                        <button type="submit" class="abc" style="color: #008000;background-color: transparent;border: 2px solid #d65106;border-radius: 5px;">Order Now</button>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="qty">Qty</label>
+                                                <input type="number" class="form-control" name="qty" id="qty" min="1" value="1">
+                                            </div>  
+                                            <button type="submit" class="form-group col-md-4 abc" style="color: #008000;background-color: transparent;border: 2px solid #d65106;border-radius: 5px;">Order Now</button>
+                                        </div>
                                     </div>
                                 </form>
                                 @endforeach
@@ -224,10 +256,16 @@
                                         </div>
                                         <h5><strong> ₹ {{$value->price ?? ''}} / Item</strong></h5>
                                         <input type="hidden" value="{{$value->id}}" name="food_id">
-                                        <input type="hidden" value="{{$value->restaurant_details->id ?? ""}}" name="restaurant_id">
+                                        <input type="hidden" value="{{$value->restaurant_details->id ?? ''}}" name="restaurant_id">
                                         <h5> {{$value->restaurant_details->name ?? ''}}</h5>
                                         <h6> {{$value->restaurant_details->address ?? ""}}</h6>
-                                        <button type="submit" class="abc" style="color: #c60a0a;background-color: transparent;border: 2px solid #d65106;border-radius: 5px;">Order Now</button>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="qty">Qty</label>
+                                                <input type="number" class="form-control" name="qty" id="qty" min="1" value="1">
+                                            </div>
+                                            <button type="submit" class="form-group col-md-4 abc" style="color: #c60a0a;background-color: transparent;border: 2px solid #d65106;border-radius: 5px;">Order Now</button>
+                                        </div>
                                     </div>
                                 </form>
                                 @endforeach
@@ -237,7 +275,39 @@
                     </div>
                 </div>
             </div>
+            @php
+            if(!Session::has('cart') || empty(Session::get('cart'))){
+                $display = 'none';
+            }else{
+              $display = 'show';
+            }
+            @endphp
+        </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Orders</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('place_order') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                       
+                        <button type="submit" class="btn btn-primary" style="display: {{$display}};">Order Now</button>
+                       
+                    </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End Menu -->
@@ -262,6 +332,7 @@
     <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
     <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+
     <!-- ALL PLUG -->
     <script src="{{asset('js/jquery.superslides.min.js')}}"></script>
     <script src="{{asset('js/images-loded.min.js')}}"></script>
@@ -272,7 +343,31 @@
     <script src="{{asset('js/custom.js')}}"></script>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            $('body').on('click', '.exampleModalajax', function() {
 
+                $.ajax({
+                        headers: {
+                            'x-csrf-token': _token
+                        },
+                        method: 'GET',
+                        url: "{{route('getCart')}}",
+                        beforeSend: function() {
+                            $('.ajax-loader11').css("visibility", "visible");
+                        },
+                        data: {
+                            data: '',
+                            _method: 'GET'
+                        }
+                    })
+                    .done(function(data) {
+                        $('.ajax-loader11').css("visibility", "hidden");
+                        console.log(data);
+                        $('.modal-body').html(data);
+                    });
+            });
+        });
     </script>
 </body>
 

@@ -7,7 +7,7 @@
         <h3 class="font-size-18 mb-0">Order Foods List</h3>    
     </div>
     <div class="col-auto">
-        <a class="btn btn-primary btn-sm px-2 py-1 mb-3" href="{{ route("restaurant") }}">Home</a>
+        <a class="btn btn-primary btn-sm px-2 py-1 mb-3" href="{{ route('restaurant') }}">Home</a>
     </div>
 </div>
 
@@ -22,7 +22,8 @@
                         <th>Customer Mobile</th>
                         <th>Customer Address</th>
                         <th>Food Name</th>
-                        <th>Food Price</th>
+                        <th>Food Price / Qty</th>
+                        <th>Order Qty</th>
                         <th>Order Time</th>
                     </tr>
                 </thead>
@@ -49,6 +50,9 @@
                        
                         <td>
                             {{ $value->foodprice ?? '' }}
+                        </td>
+                        <td>
+                            {{ $value->qty ?? '' }}
                         </td>
                         <td>
                             {{date('d-m-Y H:i:s', strtotime($value->time)) ?? ""}}   

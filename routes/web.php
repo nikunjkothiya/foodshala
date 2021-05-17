@@ -33,9 +33,11 @@ Route::get('restaurant/add', function () {
     })->name('food.add');
     
 Route::get('restaurant/orders', 'HomeController@orders')->name('restaurant.orders');
+//Ajax for get Cart
+Route::get('getCart', 'HomeController@getCart')->name('getCart');
+Route::post('place_order', 'HomeController@place_order')->name('place_order');
 Route::post('restaurant/add', 'HomeController@newfood_add')->name('newfood.add');
 Route::get('restaurant/feedbacks', 'HomeController@feedbacks')->name('restaurant.feedbacks');
 Route::get('restaurant/edit/{id?}', 'HomeController@food_find')->name('food.find');
 Route::put('restaurant/edit/{id?}', 'HomeController@food_edit')->name('food.edit');
 Route::get('restaurant/delete/{id?}', 'HomeController@food_delete')->name('food.delete');
-

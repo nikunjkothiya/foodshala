@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -35,8 +36,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        $lists = Food::where('user_id',Auth::user()->id)->get();
-        return view('restaurant.index',compact('lists'));
+        $lists = Food::where('user_id', Auth::user()->id)->get();
+        return view('restaurant.index', compact('lists'));
     }
 
     public function customer_registration(Request $request)
@@ -65,36 +66,131 @@ class HomeController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('login')->with('message','Customer Successfully Register');
+        return redirect()->route('login')->with('message', 'Customer Successfully Register');
     }
-    
+
     public function allMenus()
     {
-        $vegFoods = Food::with('restaurant_details')->where('food_type',1)->get();
-        $nonvegFoods = Food::with('restaurant_details')->where('food_type',2)->get();
+        $vegFoods = Food::with('restaurant_details')->where('food_type', 1)->get();
+        $nonvegFoods = Food::with('restaurant_details')->where('food_type', 2)->get();
 
-        return view('welcome',compact('vegFoods','nonvegFoods'));
+        return view('welcome', compact('vegFoods', 'nonvegFoods'));
     }
 
     public function order_food(Request $request)
     {
-       if(Auth::user()){
-           $user_id = Auth::user()->id;
-           $role_id = User::where(['id'=>$user_id, 'role_id'=>1])->get();
-           if(count($role_id) >0){
-              $newfood =new FoodOrder;
-              $newfood->user_id = $user_id;
-              $newfood->food_id = $request->food_id;
-              $newfood->restaurant_id = $request->restaurant_id;
-              $newfood->save();
+        if (Auth::user()) {
+            $role_id = User::where(['id' => Auth::user()->id, 'role_id' => 1])->get();
+            if (count($role_id) > 0) {
 
-               return redirect()->back()->with('message','Order Book Successfully');
-           }else{
-               return redirect()->back()->with('error','Dear Restaurant, You Cannot Orders Food');
-           }
-      }else{
-       return Redirect::to('login');
-      }
+                $cart = Session::get('cart');
+
+                $cart[$request->food_id] = array(
+                    "food_id" => $request->food_id,
+                    "restaurant_id" => $request->restaurant_id,
+                    "user_id" => Auth::user()->id,
+                    "qty" => $request->qty,
+                );
+
+                Session::put('cart', $cart);
+
+                Session::flash('message', 'Product add to cart');
+
+                return redirect()->back();
+
+                /*   $user_id = Auth::user()->id;
+            $role_id = User::where(['id' => $user_id, 'role_id' => 1])->get();
+            if (count($role_id) > 0) {  */
+                /*   $newfood = new FoodOrder;
+                $newfood->user_id = $user_id;
+                $newfood->food_id = $request->food_id;
+                $newfood->restaurant_id = $request->restaurant_id;
+                $newfood->save();  */
+
+                //  return redirect()->back()->with('message', 'Order Book Successfully');
+            } else {
+                return redirect()->back()->with('error', 'Dear Restaurant, You Cannot Orders Food');
+            }
+        } else {
+            return Redirect::to('login');
+        }
+    }
+
+    public function getCart(Request $request)
+    {
+        if (Auth::user()) {
+            $html = '';
+            $mycart = Session::get('cart');
+            if (Session::get('cart') == null) {
+                $html .= "<table class='table'>
+                <thead>
+                  <tr>
+                    <th>Food Name</th>
+                    <th>Food Qty</th>
+                    <th>Restaurant</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cart Empty</td>
+                    <td>Cart Empty</td>
+                    <td>Cart Empty</td>
+                  </tr>
+                </tbody>
+              </table>";
+            } else {
+
+                foreach ($mycart as $key => $val) {
+
+                    $fooddetalis = Food::with('restaurant_details')->where('id', $val['food_id'])->first();
+
+                    $restaurant = $fooddetalis->restaurant_details->name;
+
+                    $html .= "<table class='table'>
+                <thead>
+                  <tr>
+                    <th>Food Name</th>
+                    <th>Food Qty</th>
+                    <th>Restaurant</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>$fooddetalis->name</td>
+                    <td>" . $val['qty'] . "</td>
+                    <td>$restaurant</td>
+                  </tr>
+                </tbody>
+              </table>";
+                }
+            }
+
+            echo $html;
+        } else {
+            return Redirect::to('login');
+        }
+    }
+
+    public function place_order(Request $request)
+    {
+        $cart = Session::get('cart');
+
+        $user_id = Auth::user()->id;
+        $role_id = User::where(['id' => $user_id, 'role_id' => 1])->get();
+        if (count($role_id) > 0) {
+            foreach ($cart as $key => $val) {
+                $newfood = new FoodOrder;
+                $newfood->user_id = $val['user_id'];
+                $newfood->food_id =  $val['food_id'];
+                $newfood->restaurant_id = $val['restaurant_id'];
+                $newfood->qty = $val['qty'];
+                $newfood->save();
+            }
+            Session::forget('cart');
+            return redirect()->back()->with('message', 'Order Book Successfully');
+        } else {
+            return redirect()->back()->with('error', 'Dear Restaurant, You Cannot Orders Food');
+        }
     }
 
     public function newfood_add(Request $request)
@@ -111,38 +207,37 @@ class HomeController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-       
-       if(Auth::user()){
-           $role_id = Auth::user()->role_id;
-    
-           if($role_id == 2 ){
-                if($request->file('image'))
-                { 
-                  $file = $request->file('image');  
-                  $destinationPath = public_path(). '/images/';
-                  $image = time().$file->getClientOriginalName();
-                  $file->move($destinationPath, $image);
-                  $imgpath = 'images/'.$image;
-                }else{
+
+        if (Auth::user()) {
+            $role_id = Auth::user()->role_id;
+
+            if ($role_id == 2) {
+                if ($request->file('image')) {
+                    $file = $request->file('image');
+                    $destinationPath = public_path() . '/images/';
+                    $image = time() . $file->getClientOriginalName();
+                    $file->move($destinationPath, $image);
+                    $imgpath = 'images/' . $image;
+                } else {
                     $imgpath = null;
                 }
-           
-                  $newfood_add = new Food();
-                  $newfood_add->user_id = Auth::user()->id;
-                  $newfood_add->name = $request->name;
-                  $newfood_add->description = $request->description;
-                  $newfood_add->price = $request->price;
-                  $newfood_add->image = $imgpath;
-                  $newfood_add->food_type = $request->food_type;
-                  $newfood_add->save();
 
-               return redirect()->route('restaurant')->with('message','Food Added Successfully');
-           }else{
-               return redirect()->back()->with('error','Customer can not add food');
-           }
-      }else{
-       return Redirect::to('login');
-      }
+                $newfood_add = new Food();
+                $newfood_add->user_id = Auth::user()->id;
+                $newfood_add->name = $request->name;
+                $newfood_add->description = $request->description;
+                $newfood_add->price = $request->price;
+                $newfood_add->image = $imgpath;
+                $newfood_add->food_type = $request->food_type;
+                $newfood_add->save();
+
+                return redirect()->route('restaurant')->with('message', 'Food Added Successfully');
+            } else {
+                return redirect()->back()->with('error', 'Customer can not add food');
+            }
+        } else {
+            return Redirect::to('login');
+        }
     }
     public function food_edit(Request $request, $id)
     {
@@ -159,72 +254,71 @@ class HomeController extends Controller
                 ->withInput();
         }
 
-         if($request->file('image'))
-         { 
-           $file = $request->file('image');  
-           $destinationPath = public_path(). '/images/';
-           $image = time().$file->getClientOriginalName();
-           $file->move($destinationPath, $image);
-           $imgpath = 'images/'.$image;
-         }else{
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $destinationPath = public_path() . '/images/';
+            $image = time() . $file->getClientOriginalName();
+            $file->move($destinationPath, $image);
+            $imgpath = 'images/' . $image;
+        } else {
             $imgpath = $request->oldimage;
-         }
-           $food = Food::find($id);
-           $food->user_id = Auth::user()->id;
-           $food->name = $request->name;
-           $food->description = $request->description;
-           $food->price = $request->price;
-           $food->image = $imgpath;
-           $food->food_type = $request->food_type;
-           $food->save();
+        }
+        $food = Food::find($id);
+        $food->user_id = Auth::user()->id;
+        $food->name = $request->name;
+        $food->description = $request->description;
+        $food->price = $request->price;
+        $food->image = $imgpath;
+        $food->food_type = $request->food_type;
+        $food->save();
 
-        return redirect()->route('restaurant')->with('message','Food Edit Successfully'); 
+        return redirect()->route('restaurant')->with('message', 'Food Edit Successfully');
     }
 
     public function food_find($id)
     {
-         $food = Food::find($id);  
-         return view('restaurant.edit',compact('food'));    
+        $food = Food::find($id);
+        return view('restaurant.edit', compact('food'));
     }
 
     public function feedbacks()
     {
-         $feedbacks = Feedback::with('user')->orderBy('id','desc')->get();
-         return view('restaurant.feedback',compact('feedbacks'));    
+        $feedbacks = Feedback::with('user')->orderBy('id', 'desc')->get();
+        return view('restaurant.feedback', compact('feedbacks'));
     }
 
     public function food_delete($id)
     {
-         $food = Food::find($id);
-         $food_order = FoodOrder::where('food_id',$food->id)->delete();
-         $food->delete();
-         return redirect()->back()->with('message','Food Deleted Successfully');    
+        $food = Food::find($id);
+        $food_order = FoodOrder::where('food_id', $food->id)->delete();
+        $food->delete();
+        return redirect()->back()->with('message', 'Food Deleted Successfully');
     }
 
     public function orders()
     {
-       if(Auth::user()){
-           $user_id = Auth::user()->id;
-    
-           if($user_id){
-               $customers = DB::table('food_order')
-                           ->join('foods', 'food_order.food_id', '=', 'foods.id')
-                           ->join('users', 'users.id', '=', 'food_order.user_id')
-                           ->where('restaurant_id', $user_id)
-                           ->select('users.name as customername','users.address as address','users.mobile as customerphone','foods.id as foodid','foods.name as foodname','foods.description as fooddesc','foods.price as foodprice','food_order.created_at as time')
-                           ->get();
-         
-               return view('restaurant.orders',compact('customers'));
-           }else{
-               return redirect()->back()->with('error','Customer can not add food');
-           }
-      }else{
-       return Redirect::to('login');
-      }
+        if (Auth::user()) {
+            $user_id = Auth::user()->id;
+
+            if ($user_id) {
+                $customers = DB::table('food_order')
+                    ->join('foods', 'food_order.food_id', '=', 'foods.id')
+                    ->join('users', 'users.id', '=', 'food_order.user_id')
+                    ->where('restaurant_id', $user_id)
+                    ->select('users.name as customername', 'users.address as address', 'users.mobile as customerphone', 'foods.id as foodid', 'foods.name as foodname', 'foods.description as fooddesc', 'foods.price as foodprice', 'food_order.created_at as time', 'food_order.qty as qty')
+                    ->get();
+
+                return view('restaurant.orders', compact('customers'));
+            } else {
+                return redirect()->back()->with('error', 'Customer can not add food');
+            }
+        } else {
+            return Redirect::to('login');
+        }
     }
 
     ///API
-/* 
+    /* 
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
