@@ -32,6 +32,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index()
     {
         $lists = Food::where('user_id',Auth::user()->id)->get();
@@ -221,7 +222,7 @@ class HomeController extends Controller
     }
 
     ///API
-
+/* 
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -390,5 +391,5 @@ class HomeController extends Controller
         $user->save();
 
         return response()->json(['success' => true, 'message' => 'User Feedback Save Successfully', 'data' => $user]);
-    }
+    } */
 }

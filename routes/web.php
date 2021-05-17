@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //URL::forceScheme('http');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/', 'HomeController@allMenus')->name('home');
 Route::post('order_food', 'HomeController@order_food')->name('order_food');
 

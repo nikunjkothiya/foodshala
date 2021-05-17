@@ -16,7 +16,7 @@
     <title>Food Shala</title>
 
     <!-- Site Icons -->
-  <!--  <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" type="image/x-icon">  -->
+    <!--  <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" type="image/x-icon">  -->
     <link rel="icon" href="{{asset('images/my-logo.jpg')}}">
     <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}">
 
@@ -74,10 +74,13 @@
                     <ul class="navbar-nav ml-auto">
                         @guest
                         <li class="nav-item active"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                        
+
                         <li class="nav-item"><a class="nav-link" href="{{ route('customer_registration') }}">Register Customer</a></li>
                         @endguest
                         @auth
+                        @if(Auth::user()->role_id == 2)
+                        <li class="nav-item"><a class="nav-link" href="{{ route('restaurant') }}">Your Panel</a></li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
@@ -103,29 +106,40 @@
     <!-- End header -->
 
     <!-- Start slides -->
- 
+
     <div id="slides" class="cover-slides">
         <ul class="slides-container">
             <li class="text-left">
-                <img src="{{asset('images/slider-01.jpg')}}" alt="">
+                <img src="{{asset('images/slider-01.jpg')}}" alt="slider">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Welcome To <br>The FoodShala</strong></h1>
                             <p class="m-b-40">“I know once people get connected to real food, they never change back.” </br>
-                            “Food is symbolic of love when words are inadequate.”
-                            </p> 
+                                “Food is symbolic of love when words are inadequate.”
+                            </p>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="text-left">
-                <img src="{{asset('images/slider-02.jpg')}}" alt="">
+                <img src="{{asset('images/slider-02.jpg')}}" alt="slider">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Welcome To <br>The FoodShala</strong></h1>
                             <p class="m-b-40">“Food for us comes from our relatives, whether they have wings or fins or roots. That is how we consider food. Food has a culture. It has a history. It has a story. It has relationships.”</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-left">
+                <img src="{{asset('images/slider-03.jpg')}}" alt="slider">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br>The FoodShala</strong></h1>
+                            <p class="m-b-40">“Tell me what you eat, and I will tell you who you are.”</p>
                         </div>
                     </div>
                 </div>
@@ -162,17 +176,17 @@
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                             <div class="row">
-                            @if(isset($vegFoods))
+                                @if(isset($vegFoods))
                                 @foreach($vegFoods as $key => $value)
                                 <form method="POST" action=" {{ route('order_food') }}" class="col-lg-4 col-md-6 special-grid">
                                     @csrf
-                                    <div >
+                                    <div>
                                         <div class="gallery-single fix">
-                                        @if(isset($value->image))
+                                            @if(isset($value->image))
                                             <img src="{{asset(''.$value->image)}}" class="img-fluid" alt="Image" style="height:200px; width:260px;">
-                                         @else
+                                            @else
                                             <img src="{{asset('images/no-image.jpg')}}" class="img-fluid" alt="Image" style="height:200px; width:260px;">
-                                         @endif
+                                            @endif
                                             <div class="why-text">
                                                 <h4>{{$value->name ?? ''}}</h4>
                                                 <p>{{$value->description ?? ''}}</p>
@@ -187,22 +201,22 @@
                                     </div>
                                 </form>
                                 @endforeach
-                            @endif
+                                @endif
                             </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                             <div class="row">
-                            @if(isset($nonvegFoods))
+                                @if(isset($nonvegFoods))
                                 @foreach($nonvegFoods as $key => $value)
                                 <form method="POST" action=" {{ route('order_food') }}" class="col-lg-4 col-md-6 special-grid">
                                     @csrf
                                     <div>
                                         <div class="gallery-single fix">
-                                         @if(isset($value->image))
+                                            @if(isset($value->image))
                                             <img src="{{asset(''.$value->image)}}" class="img-fluid" alt="Image" style="height:200px; width:260px;">
-                                         @else
+                                            @else
                                             <img src="{{asset('images/no-image.jpg')}}" class="img-fluid" alt="Image" style="height:200px; width:260px;">
-                                         @endif
+                                            @endif
                                             <div class="why-text">
                                                 <h4>{{$value->name ?? ''}}</h4>
                                                 <p>{{$value->description ?? ''}}</p>
@@ -217,7 +231,7 @@
                                     </div>
                                 </form>
                                 @endforeach
-                            @endif
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -232,11 +246,11 @@
     <footer class="footer-area">
         <div class="copyright">
             <div class="container">
-                    <div class="col-lg-12">
-                        <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By FoodShala</a> Design By :
-                            <a href="#">Nikunj Kothiya</a>
-                        </p>
-                    </div>
+                <div class="col-lg-12">
+                    <p class="company-name">All Rights Reserved. &copy; 2021 <a href="#">By FoodShala</a> Design By :
+                        <a href="#">Nikunj Kothiya</a>
+                    </p>
+                </div>
             </div>
         </div>
     </footer>

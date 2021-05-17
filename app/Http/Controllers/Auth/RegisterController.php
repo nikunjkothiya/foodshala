@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -29,8 +31,9 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-   
+    protected $redirectTo = '/login';
+    //protected $redirectTo = Redirect::route('login')->with('messsage', 'Restaurant Ragister Sucessfully');
+
 
     /**
      * Create a new controller instance.
@@ -55,7 +58,7 @@ class RegisterController extends Controller
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
             'mobile'    => ['required', 'integer'],
-            'address'   => ['required', 'min:5','max:250'],
+            'address'   => ['required', 'min:5', 'max:250'],
             'opentime'  => ['required'],
             'closetime' => ['required'],
             'foodtype'  => ['required'],
@@ -78,7 +81,7 @@ class RegisterController extends Controller
             'mobile'    => $data['mobile'],
             'address'   => $data['address'],
             'open_time' => $data['opentime'],
-            'close_time'=> $data['closetime'],
+            'close_time' => $data['closetime'],
             'food_type' => $data['foodtype'],
         ]);
     }
