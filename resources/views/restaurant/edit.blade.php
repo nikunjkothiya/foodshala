@@ -20,12 +20,22 @@
                     <div class="form-group">
                         <label for="name">Food Name<sup class="text-danger">*</sup></label>
                         <input type="text" class="form-control" id="name" name="name" value="{{$food->name ?? ""}}" required>
+                        @if ($errors->has('name'))
+                            <div class="error" style="color: red;">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description">Food Description (Max:100)<sup class="text-danger">*</sup></label>
                         <textarea type="text" class="form-control" id="description" name="description" required rows="2">{{$food->description ?? ""}}</textarea>
+                        @if ($errors->has('description'))
+                            <div class="error" style="color: red;">
+                                {{ $errors->first('description') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-12 form-group ml-3">
@@ -38,7 +48,12 @@
                 <div class="row">
                     <div class="col-lg-3 form-group ml-3">
                         <label for="price">Food Price (₹)<sup class="text-danger">*</sup></label>
-                        <input type="text" class="form-control" id="price" name="price" value="{{$food->price ?? ""}}" required placeholder="220">
+                        <input type="number" class="form-control" id="price" name="price" value="{{$food->price ?? ''}}" required placeholder="220" min="0">
+                        @if ($errors->has('price'))
+                            <div class="error" style="color: red;">
+                                {{ $errors->first('price') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-3 form-group">   
                         <label for="foodtype">Select Food Type<sup class="text-danger">*</sup></label>

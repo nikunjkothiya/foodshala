@@ -102,7 +102,7 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required|max:100',
-            'price' => 'required|integer',
+            'price' => 'required|integer|min:0',
             'food_type'   => 'required',
         ]);
 
@@ -149,7 +149,7 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required|max:100',
-            'price' => 'required|integer',
+            'price' => 'required|integer|min:0',
             'food_type'   => 'required',
         ]);
 
