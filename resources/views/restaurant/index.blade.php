@@ -58,11 +58,11 @@
                         </td>
                         @if($value->food_type == 1 ?? "")  
                         <td>
-                            Pizza
+                            Veg
                         </td>
                         @else
                         <td>
-                           Burger
+                           Non-Veg
                         </td>
                         @endif
                         <td>
