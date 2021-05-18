@@ -49,6 +49,7 @@
             z-index: 10000000;
             opacity: 0.8;
         }
+
     </style>
 </head>
 
@@ -227,8 +228,8 @@
                                             <div class="form-group col-md-4">
                                                 <label for="qty">Qty</label>
                                                 <input type="number" class="form-control" name="qty" id="qty" min="1" value="1">
-                                            </div>  
-                                            <button type="submit" class="form-group col-md-4 abc" style="color: #008000;background-color: transparent;border: 2px solid #d65106;border-radius: 5px;">Order Now</button>
+                                            </div>
+                                            <button type="submit" class="form-group col-md-4" style="color: #008000;background-color: transparent;border: 2px solid #008000;border-radius: 5px;cursor: pointer;">Add To Cart</button>
                                         </div>
                                     </div>
                                 </form>
@@ -264,7 +265,7 @@
                                                 <label for="qty">Qty</label>
                                                 <input type="number" class="form-control" name="qty" id="qty" min="1" value="1">
                                             </div>
-                                            <button type="submit" class="form-group col-md-4 abc" style="color: #c60a0a;background-color: transparent;border: 2px solid #d65106;border-radius: 5px;">Order Now</button>
+                                            <button type="submit" class="form-group col-md-4" style="color: #c60a0a;background-color: transparent;border: 2px solid #FF6347;border-radius: 5px;cursor: pointer;">Add To Cart</button>
                                         </div>
                                     </div>
                                 </form>
@@ -277,9 +278,9 @@
             </div>
             @php
             if(!Session::has('cart') || empty(Session::get('cart'))){
-                $display = 'none';
+            $display = 'none';
             }else{
-              $display = 'show';
+            $display = 'show';
             }
             @endphp
         </div>
@@ -295,16 +296,16 @@
                         </button>
                     </div>
                     <form action="{{ route('place_order') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                      
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                       
-                        <button type="submit" class="btn btn-primary" style="display: {{$display}};">Order Now</button>
-                       
-                    </div>
+                        @csrf
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            <button type="submit" class="btn btn-primary" style="display: {{$display}};">Order Now</button>
+
+                        </div>
                     </form>
                 </div>
             </div>
